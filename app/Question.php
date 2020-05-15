@@ -59,7 +59,7 @@ class Question extends Model
 
     public function favorites()
     {
-        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps(); //, 'question_id', 'user_id');
     }
 
     public function isFavorited()
@@ -75,5 +75,20 @@ class Question extends Model
     public function getFavoritesCountAttribute()
     {
         return $this->favorites->count();
+    }
+
+    public function votes()
+    {
+        return $this->morphToMany(User::class, 'votable');
+    }
+
+    public function upVotes()
+    {
+        return $this->votes()->wherePivot('vote', 1);
+    }
+
+    public function downVotes()
+    {
+        return $this->votes()->wherePivot('vote', -1);
     }
 }
