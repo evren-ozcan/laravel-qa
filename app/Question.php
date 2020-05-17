@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Question extends Model
 {
@@ -89,7 +90,7 @@ class Question extends Model
 
     public function excerpt($length)
     {
-        return str_limit(strip_tags($this->bodyHtml()), $length);
+        return Str::limit(strip_tags($this->bodyHtml()), $length);
     }
 
     private function bodyHtml()
